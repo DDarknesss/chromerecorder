@@ -1,7 +1,9 @@
 chrome.extension.onConnect.addListener(function(port) {
+    
     function screenCapture(param){
-        chrome.desktopCapture.chooseDesktopMedia( [param], accessToRecord);
+        chrome.desktopCapture.chooseDesktopMedia([param], accessToRecord);
     };
+
 
     function startStream(stream){ 
         var mediaStreamObject = new MediaRecorder(stream);
@@ -10,26 +12,47 @@ chrome.extension.onConnect.addListener(function(port) {
             var win  = window.open('index.html','_blank');
             win.somesrc = blob.data;
         };
+        
+        stream.oninactive = function(){
+            if(mediaStreamObject.state === 'recording' ){
+                mediaStreamObject.stop();
+            };
+            stream.getTracks().forEach(recording => recording.stop());
+            chromeListens("popup.html", '');
+        };
+        
+        chrome.browserAction.onClicked.addListener(function() {
+            stopStream(stream);
+        });
+
+        mediaStreamObject.onstop = function (){
+            stopStream(stream);
+        }
 
         port.onMessage.addListener(function(msg) {
             if(msg === 'stop'){
-                stream.oninactive();
+                stopStream(stream);
             };
         });
 
-        stream.oninactive = function(){
-            mediaStreamObject.stop();
-            stream.getTracks().forEach( track => track.stop() );
-        };
-        
         port.postMessage('change!');
         mediaStreamObject.start();
+        chromeListens("", 'rec');
     };
+
+    function stopStream(stream){
+        stream.oninactive();
+    }
 
     function failedStream(err){
         console.log(err);
     };
- 
+
+    function chromeListens(pop, text){
+        chrome.browserAction.setPopup({popup: pop});
+        chrome.browserAction.setBadgeText( { text: text});
+    }
+
     function tabscreen(){
         chrome.tabCapture.capture({
             audio: false,

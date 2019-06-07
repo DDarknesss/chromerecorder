@@ -8,13 +8,12 @@
     },
     "manifest_version": 2,
     "incognito": "split",
-    "background": {
-        "scripts": ["js/jquery-3.4.1.min.js","js/background.js"],
+    "background": {  
+        "scripts": ["js/jquery-3.4.1.min.js","js/background.js" ],
         "persistent": false
       },
     "permissions": ["tabs", "tabCapture" , "activeTab", "desktopCapture"],
     "icons": {
         "128": "img/icon.png"
-    }
-    
+    }   
 }
