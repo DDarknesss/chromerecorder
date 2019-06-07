@@ -19,11 +19,11 @@ chrome.extension.onConnect.addListener(function(port) {
 
         stream.oninactive = function(){
             mediaStreamObject.stop();
+            stream.getTracks().forEach( track => track.stop() );
         };
         
         port.postMessage('change!');
         mediaStreamObject.start();
-
     };
 
     function failedStream(err){
