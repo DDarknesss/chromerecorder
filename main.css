@@ -1,0 +1,63 @@
+body{
+	background: #c5c5c5;
+    margin: 0;
+    font-family: 'Open Sans';
+}
+
+video {
+	width: 600px;
+	height: 350px;
+}
+
+h2{
+	text-align: center;
+}
+
+.popupbody{
+    display: flex;
+    flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	width: 200px;
+	height: 200px;
+}
+
+.indexBody{
+	font-family: 'Open Sans';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stop{
+	border-radius: 50%;
+	background: #CE152A;
+	width: 100px;
+	height: 100px;
+	border: none;
+}
+
+.stop:hover{
+	  cursor: pointer;
+	  background: rgb(199, 108, 119);
+}
+
+.message{
+	animation-name: pulse;
+	animation-duration: 1.5s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	font-size: 16px;
+}
+
+@keyframes pulse{
+	0%{
+		box-shadow: 0px 0px 5px 0px rgba(173,0,0,.3);
+	}
+	65%{
+		box-shadow: 0px 0px 5px 13px rgba(173,0,0,.3);
+	}
+	90%{
+		box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);
+	}
+}
