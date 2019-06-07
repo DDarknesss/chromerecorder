@@ -34,7 +34,7 @@ chrome.extension.onConnect.addListener(function(port) {
                 stopStream(stream);
             };
         });
-
+        
         port.postMessage('change!');
         mediaStreamObject.start();
         chromeListens("", 'rec');
@@ -57,6 +57,15 @@ chrome.extension.onConnect.addListener(function(port) {
         chrome.tabCapture.capture({
             audio: false,
             video: true,
+            videoConstraints: {
+                mandatory: {
+                    chromeMediaSource: 'tab',
+                    minWidth: 640,
+                    maxWidth: 640,
+                    minHeight: 420,
+                    maxHeight: 420
+                }
+            }
         }, startStream )
     };
 
